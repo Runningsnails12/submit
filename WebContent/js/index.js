@@ -88,12 +88,14 @@ submit.addEventListener('mouseover', function () {
 main.addEventListener('mouseout', function () {
     main.style.transform = 'translate(-50%, -50%)';
     select.style.width = '230px';
+    select.style.paddingRight = '0px';
     submit.style.pointerEvents = 'auto';
     input.style.pointerEvents = 'auto';
-})
+});
 input.addEventListener('mouseover', function () {
     main.style.transform = 'translate(-55%, -50%)';
     select.style.width = '360px';
+    select.style.paddingRight = '50px';
     submit.style.pointerEvents = 'none';
 });
 

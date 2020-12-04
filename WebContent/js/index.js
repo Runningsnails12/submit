@@ -1,124 +1,133 @@
-﻿$(function () {
-    var nameflag = 0,
-        typeflag = 0,
-        sizeflag = 0;
-    $(".d").on("click", function () {
+﻿
+// 设置文本不可被选中
+var tool = new Tool(document, window);
+tool.textProhibition();
 
-        if (getFileName().trim() == "") {
-            $(".info").text("请上传文件");
-            return
-        }
-        check();
-        // console.log(nameflag);
-        // console.log(typeflag);
-        // console.log(sizeflag);
-        // console.log(myRotateVerify.verifyState);
+var main = getDom('.main'); // 获取主盒子
+var input = main.getDom('input'); // 选择文件的按钮
+var select = main.getDom('.selectBox'); // 选择文件的显示框
+var submit = main.getDom('.submit'); // 提交按钮
+var bgi = getDom('.bgi'); // 背景图盒子
+var bgiIndex = 1; // 当前背景图的下标
+var cycleRange = 2; // 老板
 
-        if (nameflag == 0 || typeflag == 0 || sizeflag == 0) {
-            return
-        }
+// 重置选择文件的框
+function selectReset() {
+    select.removeClass('select');
+    select.innerText = '选择文件';
+    var span = document.createElement('span');
+    span.innerText = '＋';
+    select.appendChild(span);
+    select.title = '';
+}
 
-        var formData = new FormData;
-        formData.append("testfile", document.getElementById("c").files[0]);
+// 文件改变函数
+function inputChangeFunction() {
+    var file = input.files[0];
+    if (!file) {
+        return;
+    }
+    if (!judge(file.name)) {
+        alert('文件名格式不正确！');
+        return;
+    }
+    select.innerText = file.name;
+    select.title = file.name;
+    select.addClass('select');
+}
 
-        if (nameflag == 1 && typeflag == 1 && sizeflag == 1 && myRotateVerify.verifyState == true) {
-            $(".info").text("正在提交");
-            $.ajax({
-                type: "post",
-                url: "/shaobing/io/updateIcon",
-                data: formData,
-                cache: false,
-                processData: false,
-                contentType: false,
-                success: function (json) {
-                	console.log(json.flag);
-                    if (json.flag == 1) {
-                    	//alert(json.flag);
-                        $(".info").text("提交成功！");
-                        window.open("http://106.15.94.131/shaobing/html/Jump.html");
-                        //setTimeout(function () {window.location.reload();}, 3000);
-                        //alert("okk！");
-                    } else {
-                        $(".info").text("提交失败!!");
-                        alert(json.message);
-                    }
+// 判断文件名是否满足格式
+function judge(str) {
+    // 老板
+    return true;
+}
 
+// 添加选择文件事件
+input.addEventListener('change', inputChangeFunction);
+
+// 提交函数
+function upload() {
+    var file = input.files[0];
+    if (file) {
+        var formdata = new FormData();
+        formdata.append('file', file);
+        ajax({
+            type: 'post',
+            url: 'shaobing/io/upload',
+            data: formdata,
+            success: function (res) {
+                if (res.flag == 1) {
+                    alert('提交成功！');
+                } else {
+                    alert(res.message);
                 }
-            });
-        }
-
-    });
-    $("#c").change(function () {
-        check();
-    });
-    function check() {
-        checkSize();
-        checkType();
-        checkFileName();
-    }
-    function getFileName() {
-        var fileName = "";
-        fileName = $("#c").val().split("\\").pop();
-        fileName = fileName.substring(0, fileName.lastIndexOf("."));
-        return fileName;
-    }
-
-    function checkFileName() {
-var a= /^1915431\d\d_..$/;  
-var b= /^1915431\d\d_...$/;  
-        if (a.test(getFileName())||b.test(getFileName())) {
-            if ($(".info").text() == "文件名不正确，格式为1915431XX_XXX/1915431XX_XX") {
-                $(".info").text("");
-                
+                submit.state = true;
             }
-            nameflag = 1;
-        } else {
-            $(".info").text("文件名不正确，格式为1915431XX_XXX/1915431XX_XX");
-            nameflag = 0;
-            
-        }
+        }, true);
+    } else {
+        alert('请先选择文件！');
     }
-    function checkType() {
-        var str = $("#c").val().toLowerCase().split('.').splice(-1);
-        if (str[0] != "doc" && str[0] != "docx") {
-            $(".info").text("文件格式不正确");
-            typeflag = 0;
+}
 
-        } else {
-            if ($(".info").text() == "文件格式不正确") {
-                $(".info").text("");
-            }
-            typeflag = 1;
-        }
+// 提交按钮初始化节流阀
+submit.state = true;
+
+// 添加提交事件
+submit.addEventListener('click', function () {
+    if (submit.state) {
+        submit.state = false;
+        upload();
     }
-    function checkSize() {
-        var c = document.getElementById("c").files;
-        if (c[0].sizesize > 20 * 1024 * 1024) {
-            $(".info").text("文件大于20M");
-            sizeflag = 0;
-        } else {
-            if ($(".info").text("") == "文件大于20M") {
-                $(".info").text("");
-            }
-            sizeflag = 1;
-        }
-    }
+});
 
-
-    var myRotateVerify = new RotateVerify('#rotateWrap', {
-        initText: '滑动将图片转正',//默认
-        slideImage: ['1.jpg'],//arr  [imgsrc1,imgsrc2] 或者str 'imgsrc1'
-        slideAreaNum: 10,// 误差范围角度 +- 10(默认)
-        getSuccessState: function (res) {//验证通过 返回  true;
-            // console.log('例1' + res);
-        }
-    })
-    //重置 
-    // $("#resetBtn").on('click', function () {
-    //     myRotateVerify.resetSlide();
-    // })
-    // //可拿到 验证状态 
-    // $("#testBtn").on('click', function () {
-    //     alert(myRotateVerify.verifyState);
-    // })
+// 主盒子相关动画
+submit.addEventListener('mouseover', function () {
+    main.style.transform = 'translate(-45%, -50%)';
+    input.style.pointerEvents = 'none';
+});
+main.addEventListener('mouseout', function () {
+    main.style.transform = 'translate(-50%, -50%)';
+    select.style.width = '230px';
+    submit.style.pointerEvents = 'auto';
+    input.style.pointerEvents = 'auto';
 })
+input.addEventListener('mouseover', function () {
+    main.style.transform = 'translate(-55%, -50%)';
+    select.style.width = '360px';
+    submit.style.pointerEvents = 'none';
+});
+
+// 初始化背景图
+for (var i = 1; i <= cycleRange; i++) {
+    var div = document.createElement('div');
+    div.style.backgroundImage = 'url(img/bg' + i + '.jpg)';
+    div.style.opacity = 0;
+    bgi.appendChild(div);
+}
+
+// 显示第一张
+bgi.children[0].style.opacity = 1;
+
+// 切换背景图
+function changeBGI() {
+    bgi.children[bgiIndex - 1].style.opacity = 0;
+    bgiIndex = bgiIndex + 1 > cycleRange ? 1 : bgiIndex + 1;
+    bgi.children[bgiIndex - 1].style.opacity = 1;
+}
+
+// 切换背景图的定时器
+setInterval(function () {
+    changeBGI();
+}, 8000);
+
+// 看板娘
+// L2Dwidget.init({
+//     "display": {
+//         "superSample": 2,
+//         "width": 200,
+//         "height": 400,
+//         "position": "right",
+//         "hOffset": 0,
+//         "vOffset": 0
+//     }
+// });

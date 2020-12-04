@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8"
+        src="js/L2Dwidget.0.min.js"></script>
+    <script type="text/javascript" charset="utf-8"
+        src="js/L2Dwidget.min.js"></script>
+    <script src="https://www.jq22.com/demo/jqRotateVerify201911051449/jqRotateVerify.js"></script>
+    <title>提交</title>
+    <style>
+        body {
+            text-align: center;
+            background: url(123.jpg) no-repeat;
+            background-size: cover;
+        }
+
+        form {
+            width: 500px;
+            padding: 20px;
+            margin: 0 auto;
+            margin-top: 100px;
+            border: 2px dashed #efefef;
+            border-radius: 5px;
+            background: white;
+        }
+
+        form:hover {
+            border: 2px dashed #FE7300;
+        }
+
+        .d {
+            position: absolute;
+            left: 50%;
+            top: 127%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #0349f4);
+            background-size: 400%;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            color: #fff;
+            border-radius: 50px;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .d::before {
+            content: "";
+            position: absolute;
+            left: -5px;
+            right: -5px;
+            top: -5px;
+            bottom: -5px;
+            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #0349f4);
+            background-size: 400%;
+            border-radius: 50px;
+            filter: blur(20px);
+            z-index: -1;
+        }
+
+        .d:hover::before {
+            animation: sun 8s infinite;
+        }
+
+        .d:hover {
+            animation: sun 8s infinite;
+        }
+
+        @keyframes sun {
+            100% {
+                background-position: -400% 0;
+            }
+        }
+
+        .info {
+            margin-top: 30px;
+            color: rgb(173, 19, 19);
+        }
+
+        #live2dcanvas {
+            border: 0 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="overflow: hidden;">
+        <form action="" method="POST" enctype="multipart/form-data">
+            <img src="https://gitee.com/static/images/upload-file.svg" style="height: 52px">
+            <p>文件：<input type="file" name="testfile" id="c" accept=".doc,.docx"></p>
+        </form>
+
+        <div class="info"></div>
+    </div>
+    <div style="position: relative">
+        <div id="rotateWrap" style="margin:50px;"></div>
+        <span class="d" style="margin: 50px 0">提交</span>
+    </div>
+    <!-- <div style="text-align: center;margin-top: 50px;">
+        <button type="button" id="resetBtn" style="height: 30px;">重置</button>
+        <button type="button" id="testBtn" style="height: 30px;">状态测试</button>
+    </div> -->
+
+
+
+
+
+    <script src="js/index.js"></script>
+    <script type="text/javascript">
+        L2Dwidget.init({
+            "display": {
+                "superSample": 2,
+                "width": 200,
+                "height": 400,
+                "position": "right",
+                "hOffset": 0,
+                "vOffset": 0
+            }
+        });
+    </script>
+</body>
+
+</html>

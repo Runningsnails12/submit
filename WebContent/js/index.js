@@ -10,6 +10,17 @@ var submit = main.getDom('.submit'); // 提交按钮
 var bgi = getDom('.bgi'); // 背景图盒子
 var bgiIndex = 1; // 当前背景图的下标
 var cycleRange = 2; // 老板
+
+var bgiOptions = [{
+    type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下
+    top: '0px', // top值
+    left: '0px', // left值
+    text: '王老板牛逼' // 文案
+    // 数组中第0个元素为模板不用删掉
+}, {
+    // 老板
+}];
+
 var nowFile;
 
 // 重置选择文件的框
@@ -169,6 +180,9 @@ document.addEventListener('keydown', function (e) {
 
 // 解锁函数
 function unlock() {
+    if (admin) {
+        return;
+    }
     admin = true;
     alert('控制台权限已打开！');
 }

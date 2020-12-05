@@ -67,6 +67,7 @@ function upload() {
         }, true);
     } else {
         alert('请先选择文件！');
+        submit.state = true;
     }
 }
 

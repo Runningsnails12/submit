@@ -10,6 +10,7 @@ var submit = main.getDom('.submit'); // 提交按钮
 var bgi = getDom('.bgi'); // 背景图盒子
 var bgiIndex = 1; // 当前背景图的下标
 var cycleRange = 2; // 老板
+var nowFile;
 
 // 重置选择文件的框
 function selectReset() {
@@ -30,6 +31,7 @@ function inputChangeFunction() {
     if (!judge(file.name)) {
         return;
     }
+    nowFile = file;
     select.innerText = file.name;
     select.title = file.name;
     select.addClass('select');
@@ -58,10 +60,9 @@ input.addEventListener('change', inputChangeFunction);
 
 // 提交函数
 function upload() {
-    var file = input.files[0];
-    if (file) {
+    if (nowFile) {
         var formdata = new FormData();
-        formdata.append('file', file);
+        formdata.append('file', nowFile);
         ajax({
             type: 'post',
             url: 'shaobing/io/upload',
@@ -77,6 +78,7 @@ function upload() {
         }, true);
     } else {
         alert('请先选择文件！');
+        submit.state = true;
     }
 }
 

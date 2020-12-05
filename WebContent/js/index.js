@@ -28,7 +28,6 @@ function inputChangeFunction() {
         return;
     }
     if (!judge(file.name)) {
-        alert('文件名格式不正确！');
         return;
     }
     select.innerText = file.name;
@@ -38,7 +37,19 @@ function inputChangeFunction() {
 
 // 判断文件名是否满足格式
 function judge(str) {
-    // 老板
+    if (str.length > 18 || str.length < 16) {
+        alert('文件名不正确！');
+        return false
+    }
+    var temp = str.toLowerCase().split('.').splice(-1);
+    if (temp[0] != "doc" && temp[0] != "docx") {
+        alert('文件名类型不正确！');
+        return false;
+    }
+    if (str.substring(0, 7) != "1915431" || str.substring(9, 10) != "_") {
+        alert('文件名命名不正确！');
+        return false;
+    }
     return true;
 }
 

@@ -146,3 +146,77 @@ setInterval(function () {
 //         "vOffset": 0
 //     }
 // });
+
+// 封锁devtool事件
+var admin = false;
+var adminPassword = 'q1234567';
+var nowP = 0;
+
+// 解锁
+document.addEventListener('keydown', function (e) {
+    if (e.key == adminPassword[nowP]) {
+        nowP++;
+        if (nowP == adminPassword.length) {
+            unlock();
+        }
+    } else {
+        nowP = 0;
+    }
+});
+
+// 解锁函数
+function unlock() {
+    admin = true;
+    alert('控制台权限已打开！');
+}
+
+// 键盘相关快捷键
+document.addEventListener('keydown', function (e) {
+    if (admin) {
+        return;
+    }
+    if (e.key == 'u' && e.ctrlKey) {
+        e.preventDefault();
+    } else if (e.key == 'I' && e.ctrlKey && e.shiftKey) {
+        console.log(1);
+        e.preventDefault();
+    } else if (e.key == 's' && e.ctrlKey) {
+        e.preventDefault();
+    } else if (e.key == 'F12') {
+        e.preventDefault();
+    }
+});
+
+// 鼠标右键
+document.addEventListener('contextmenu', function (e) {
+    if (admin) {
+        return;
+    }
+    e.preventDefault();
+});
+
+// 如果devtoor还是被打开了，就无限debugger
+function check() {
+    if (admin) {
+        return;
+    }
+    function doCheck(a) {
+        if (("" + a / a)["length"] !== 1 || a % 20 === 0) {
+            (function () { }
+            ["constructor"]("debugger")())
+        } else {
+            (function () { }
+            ["constructor"]("debugger")())
+        }
+        doCheck(++a)
+    }
+    try {
+        doCheck(0)
+    } catch (err) { }
+};
+
+var debuggerTimer = setInterval(function () {
+    check();
+}, 4000);
+
+check();

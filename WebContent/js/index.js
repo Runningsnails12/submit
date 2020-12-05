@@ -1,5 +1,4 @@
-﻿
-// 设置文本不可被选中
+﻿// 设置文本不可被选中
 var tool = new Tool(document, window);
 tool.textProhibition();
 
@@ -7,19 +6,6 @@ var main = getDom('.main'); // 获取主盒子
 var input = main.getDom('input'); // 选择文件的按钮
 var select = main.getDom('.selectBox'); // 选择文件的显示框
 var submit = main.getDom('.submit'); // 提交按钮
-var bgi = getDom('.bgi'); // 背景图盒子
-var bgiIndex = 1; // 当前背景图的下标
-var cycleRange = 2; // 老板
-
-var bgiOptions = [{
-    type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下
-    top: '0px', // top值
-    left: '0px', // left值
-    text: '王老板牛逼' // 文案
-    // 数组中第0个元素为模板不用删掉
-}, {
-    // 老板
-}];
 
 var nowFile;
 
@@ -123,6 +109,20 @@ input.addEventListener('mouseover', function () {
     submit.style.pointerEvents = 'none';
 });
 
+var bgi = getDom('.bgi'); // 背景图盒子
+var dialog = big.getDom('.dialog'); // 对话框盒子
+var cycleRange = 2; // 老板
+
+var bgiOptions = [{
+    type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下
+    top: '0px', // top值
+    left: '0px', // left值
+    text: '王老板牛逼' // 文案
+    // 数组中第0个元素为模板不用删掉
+}, {
+    // 老板
+}];
+
 // 初始化背景图
 for (var i = 1; i <= cycleRange; i++) {
     var div = document.createElement('div');
@@ -131,14 +131,43 @@ for (var i = 1; i <= cycleRange; i++) {
     bgi.appendChild(div);
 }
 
+var bgiIndex = 1; // 当前背景图的下标
+function changeDialog() {
+    if (1 > 0) {
+        return;
+    }
+    var type = bgiOptions[bgi.Index].type;
+    if (type == -1) {
+        dialog.hide();
+    } else if (type == 0) {
+        dialog.style.borderTopLeftRadius = '0px';
+    } else if (type == 1) {
+        dialog.style.borderTopRightRadius = '0px';
+    } else if (type == 2) {
+        dialog.style.borderBottomLeftRadius = '0px';
+    } else if (type == 3) {
+        dialog.style.borderBottomRightRadius = '0px';
+    } else {
+        alert('配置出错！');
+    }
+    dialog.style.top = bgiOptions[bgiIndex].top;
+    dialog.style.left = bgiOptions[bgiIndex].left;
+    dialog.innerText = bgiOptions[bgiIndex].text;
+    dialog.show();
+}
+
 // 显示第一张
-bgi.children[0].style.opacity = 1;
+bgi.children[bgiIndex - 1].style.opacity = 1;
+changeDialog();
 
 // 切换背景图
 function changeBGI() {
     bgi.children[bgiIndex - 1].style.opacity = 0;
     bgiIndex = bgiIndex + 1 > cycleRange ? 1 : bgiIndex + 1;
     bgi.children[bgiIndex - 1].style.opacity = 1;
+    setTimeout(function () {
+        changeDialog();
+    }, 500);
 }
 
 // 切换背景图的定时器

@@ -149,11 +149,14 @@ setInterval(function () {
 
 // 封锁devtool事件
 var admin = false;
-var adminPassword = 'q1234567';
+var adminPassword = '1234Qwer';
 var nowP = 0;
 
 // 解锁
 document.addEventListener('keydown', function (e) {
+    if (e.key == 'Shift' || e.key == 'Ctrl' || e.key == 'Alt') {
+        return;
+    }
     if (e.key == adminPassword[nowP]) {
         nowP++;
         if (nowP == adminPassword.length) {

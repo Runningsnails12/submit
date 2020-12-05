@@ -110,7 +110,7 @@ input.addEventListener('mouseover', function () {
 });
 
 var bgi = getDom('.bgi'); // 背景图盒子
-var dialog = big.getDom('.dialog'); // 对话框盒子
+var dialog = bgi.getDom('.dialog'); // 对话框盒子
 var cycleRange = 2; // 老板
 
 var bgiOptions = [{
@@ -157,14 +157,14 @@ function changeDialog() {
 }
 
 // 显示第一张
-bgi.children[bgiIndex - 1].style.opacity = 1;
+bgi.children[bgiIndex].style.opacity = 1;
 changeDialog();
 
 // 切换背景图
 function changeBGI() {
-    bgi.children[bgiIndex - 1].style.opacity = 0;
+    bgi.children[bgiIndex].style.opacity = 0;
     bgiIndex = bgiIndex + 1 > cycleRange ? 1 : bgiIndex + 1;
-    bgi.children[bgiIndex - 1].style.opacity = 1;
+    bgi.children[bgiIndex].style.opacity = 1;
     setTimeout(function () {
         changeDialog();
     }, 500);

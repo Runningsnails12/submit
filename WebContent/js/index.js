@@ -8,6 +8,8 @@ var select = main.getDom('.selectBox'); // 选择文件的显示框
 var submit = main.getDom('.submit'); // 提交按钮
 
 var nowFile;
+var initialFileList = input.files;
+var nowFileList = initialFileList;
 
 // 重置选择文件的框
 function selectReset() {
@@ -18,6 +20,7 @@ function selectReset() {
     select.appendChild(span);
     select.title = '';
     nowFile = null;
+    input.files = initialFileList;
 }
 
 // 文件改变函数
@@ -27,9 +30,11 @@ function inputChangeFunction() {
         return;
     }
     if (!judge(file.name)) {
+        input.files = nowFileList;
         return;
     }
     nowFile = file;
+    nowFileList = input.files;
     select.innerText = file.name;
     select.title = file.name;
     select.addClass('select');
@@ -39,16 +44,16 @@ function inputChangeFunction() {
 function judge(str) {
     if (str.length > 18 || str.length < 16) {
         subitFalse('文件名不正确');
-        return false
-    }
-    var temp = str.toLowerCase().split('.').splice(-1);
-    if (temp[0] != "doc" && temp[0] != "docx") {
-        subitFalse('文件名类型不正确');
         return false;
-    }
-    if (str.substring(0, 7) != "1915431" || str.substring(9, 10) != "_") {
-        subitFalse('文件名命名不正确');
-        return false;
+    } else {
+        var temp = str.toLowerCase().split('.').splice(-1);
+        if (temp[0] != "doc" && temp[0] != "docx") {
+            subitFalse('文件名类型不正确');
+            return false;
+        } else if (str.substring(0, 7) != "1915431" || str.substring(9, 10) != "_") {
+            subitFalse('文件名命名不正确');
+            return false;
+        }
     }
     return true;
 }
@@ -68,12 +73,12 @@ function upload() {
             success: function (res) {
                 if (res.flag == 1) {
                     submitTrue();
-                    selectReset();
                 } else {
                     subitFalse(res.message);
                     // alert(res.message);
                 }
                 submit.state = true;
+                selectReset();
             }
         }, true);
     } else {

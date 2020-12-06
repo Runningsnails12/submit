@@ -1,6 +1,7 @@
 // 测试用的node.js服务器
 var express = require('express');
 var fs = require('fs');
+var path = require('path');
 var app = express();
 var bodyParser = require('body-parser');
 var formidable = require('formidable');
@@ -63,9 +64,10 @@ function judge(str) {
 }
 app.post('/shaobing/io/upload', function (req, res) {
     var form = new formidable.IncomingForm();
+    form.uploadDir = path.join(__dirname, 'uploads'); // 设置上传的文件保存的路径
+    form.keepExtensions = true; // 上传的文件保留后缀名
     form.parse(req, function (err, fields, files) {
         var fileName = files.file.name;
-        console.log(fileName);
         var judgeFlag = judge(fileName);
         if (judgeFlag == true) {
             if (fileName == '191543139_测试中.docx') {

@@ -204,6 +204,7 @@ body {
     background-color: #f1f1f1;
     transform: translate(0, -50%);
     transition: all .5s;
+    cursor: pointer;
 }
 
 .main .submit:hover {
@@ -219,6 +220,7 @@ body {
     opacity: 0;
     transform: translate(0, -50%);
     content: '';
+    cursor: pointer;
 }
 
 .bgi {

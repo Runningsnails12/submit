@@ -11,15 +11,16 @@
  * {
  *      type: ('get'/'post'/'delete'/'put'), // 请求方式
  *      url: '', // 请求地址(必填)
- *      data: {}, // 参数(对象形式)
+ *      data: {}, // 参数(对象形式)，也可以直接传入一个FromData对象
  *      header: {}, // 请求头(对象形式)
  *      success: function() {} , // 成功函数(必填)
- *      error: function() {} // 失败函数
+ *      error: function() {} , // 失败函数
+ *      progress: function () { } // 文件上传中的函数
  * }
  * ```
  * @author 60rzvvbj
  */
-function ajax(options, fileState) {
+function ajax(options) {
 
     // 默认的请求配置对象,再用传入的对象覆盖默认配置对象,这样可以避免传参数的时候需要写所有的属性
     var defaults = {
@@ -30,16 +31,18 @@ function ajax(options, fileState) {
             'Content-Type': 'application/x-www-form-urlencoded;'
         }, // 请求头
         success: function () { }, // 成功函数
-        error: function () { } // 失败函数
+        error: function () { }, // 失败函数
+        progress: function () { } // 文件上传中的函数
     }
     Object.assign(defaults, options);
 
     // 创建XMLHttpRequest对象
     var xhr = new XMLHttpRequest();
 
-    if (fileState) {
-        xhr.open(options.type, options.url);
-        xhr.send(options.data);
+    if (defaults.data instanceof FormData) {
+        xhr.open(defaults.type, defaults.url);
+        xhr.upload.onprogress = defaults.progress;
+        xhr.send(defaults.data);
     } else {
         // 拼接参数
         var parameter = '';

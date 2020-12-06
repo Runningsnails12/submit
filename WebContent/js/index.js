@@ -169,30 +169,41 @@ function subitFalse(str) {
 // 背景相关
 
 var bgi = getDom('.bgi'); // 背景图盒子
-var dialog = bgi.getDom('.dialogBox'); // 对话框盒子
+var dialogBox = bgi.getDom('.dialogBox'); // 对话框盒子
 var cycleRange = 2; // 老板
 
-var bgiOptions = [{
-    type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下
+var bgiOptions = [[{
+    type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
     top: '0px', // top值
     left: '0px', // left值
     text: '王老板牛逼' // 文案
-    // 数组中第0个元素为模板不用删掉
 }, {
+    type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
+    top: '0px', // top值
+    left: '0px', // left值
+    text: '王老板贼牛逼' // 文案
+    // 数组中第0个元素为模板不用删掉
+}], [{
     type: 2,
     top: '430px',
     left: '1024px',
     text: '今天吃什么呢！？'
 }, {
+    type: 0,
+    top: '500px',
+    left: '1024px',
+    text: '不吃了！'
+}], [{
     type: 1,
     top: '430px',
     left: '1156px',
     text: '不想学了'
-}];
+}]];
 
 // 初始化背景图
 for (var i = 1; i <= cycleRange; i++) {
     var div = document.createElement('div');
+    div.addClass('photo');
     div.style.backgroundImage = 'url(img/bg' + i + '.jpg)';
     div.style.opacity = 0;
     bgi.appendChild(div);
@@ -200,26 +211,31 @@ for (var i = 1; i <= cycleRange; i++) {
 
 var bgiIndex = 1; // 当前背景图的下标
 function changeDialog() {
-    var type = bgiOptions[bgiIndex].type;
-    dialog.style.borderRadius = '28px';
-    if (type == -1) {
+    for (var i = 0; i < bgiOptions[bgiIndex].length; i++) {
+        var type = bgiOptions[bgiIndex][i].type;
+        var dialog = document.createElement('div');
+        dialog.addClass('dialog');
+        dialog.style.borderRadius = '28px';
         dialog.hide();
-    } else if (type == 0) {
-        dialog.style.borderTopLeftRadius = '0px';
-    } else if (type == 1) {
-        dialog.style.borderTopRightRadius = '0px';
-    } else if (type == 2) {
-        dialog.style.borderBottomLeftRadius = '0px';
-    } else if (type == 3) {
-        dialog.style.borderBottomRightRadius = '0px';
-    } else {
-        alert('配置出错！');
+        if (type == -1) {
+            continue;
+        } else if (type == 0) {
+            dialog.style.borderTopLeftRadius = '0px';
+        } else if (type == 1) {
+            dialog.style.borderTopRightRadius = '0px';
+        } else if (type == 2) {
+            dialog.style.borderBottomLeftRadius = '0px';
+        } else if (type == 3) {
+            dialog.style.borderBottomRightRadius = '0px';
+        } else {
+            alert('配置出错！');
+        }
+        dialog.style.top = bgiOptions[bgiIndex][i].top;
+        dialog.style.left = bgiOptions[bgiIndex][i].left;
+        dialog.innerText = bgiOptions[bgiIndex][i].text;
+        dialog.show();
+        dialogBox.appendChild(dialog);
     }
-    console.log(bgiOptions[bgiIndex]);
-    dialog.style.top = bgiOptions[bgiIndex].top;
-    dialog.style.left = bgiOptions[bgiIndex].left;
-    dialog.innerText = bgiOptions[bgiIndex].text;
-    dialog.show();
 }
 
 // 显示第一张
@@ -231,7 +247,7 @@ function changeBGI() {
     bgi.children[bgiIndex].style.opacity = 0;
     bgiIndex = bgiIndex + 1 > cycleRange ? 1 : bgiIndex + 1;
     bgi.children[bgiIndex].style.opacity = 1;
-    dialog.hide();
+    dialogBox.removeAllChild();
     setTimeout(function () {
         changeDialog();
     }, 800);

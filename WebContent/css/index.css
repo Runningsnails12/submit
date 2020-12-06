@@ -241,3 +241,38 @@ body {
     opacity: 0;
     transition: opacity 1.5s;
 }
+.bgi .dialogBox{
+    position: absolute;
+    padding: 10px 18px;
+    background-color: #15104fb3;
+    font-size: 18px;
+    color: #ffffff;
+    border-radius: 28px;
+    box-shadow: 0px 0px 20px 7px rgb(255, 255, 255);
+    /* border-bottom-left-radius: 0px; */
+    z-index: 10;
+    animation-name:container;
+    transform-origin: center bottom;
+    animation-duration: 4s; /*动画时间*/
+    animation-fill-mode: both; /*播放后的状态*/
+    animation-iteration-count: infinite; /*动作循环的次数：infinite 无限循环*/
+}
+@keyframes container{
+    0% {
+        transition-timing-function: cubic-bezier(0.4, 0.64, 0.63, 0.39);
+        transform: translateY(0); 
+    }
+    50%{
+        transition-timing-function: cubic-bezier(0.4, 0.64, 0.63, 0.39);
+        transform: translateY(-10px);
+    }
+
+}
+.temp1{
+    top: 403px;
+    right: 335px;
+}
+.temp2{
+    top: 523px;
+    right: 233px;
+}

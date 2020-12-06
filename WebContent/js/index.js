@@ -109,6 +109,48 @@ input.addEventListener('mouseover', function () {
     submit.style.pointerEvents = 'none';
 });
 
+// 半透明挡板
+var transparentPlate = getDom('.transparentPlate');
+
+// 提交结果提示框相关
+
+var submitTips = getDom('.submitTips'); // 提交结果提示框盒子
+var submitTipsPhoto = submitTips.getDom('.photo'); // 图片盒子
+var submitTipsText = submitTips.getDom('.tipsText'); // 提示文本那盒子
+var submitTipsYes = submitTips.getDom('.yes'); // 确定按钮
+
+// 确定按钮点击事件
+submitTipsYes.addEventListener('click', function () {
+    submitTips.hide();
+    transparentPlate.hide();
+});
+
+// 提交成功函数
+function submitTrue() {
+    transparentPlate.show();
+    submitTipsPhoto.style.backgroundImage = 'url(img/submitTrue.png)';
+    submitTipsText.innerText = '提交成功';
+    submitTips.show();
+}
+
+// 提交失败函数
+function subitFalse() {
+    transparentPlate.show();
+    submitTipsPhoto.style.backgroundImage = 'url(img/submitFalse.png)';
+    submitTipsText.innerText = '提交失败';
+    submitTips.show();
+}
+
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'y') {
+        submitTrue();
+    } else if (e.key == 'f') {
+        subitFalse();
+    }
+});
+
+// 背景相关
+
 var bgi = getDom('.bgi'); // 背景图盒子
 var dialog = bgi.getDom('.dialog'); // 对话框盒子
 var cycleRange = 2; // 老板

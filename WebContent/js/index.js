@@ -176,12 +176,14 @@ var bgiOptions = [[{
     type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
     top: '0px', // top值
     left: '0px', // left值
-    text: '王老板牛逼' // 文案
+    text: '王老板牛逼', // 文案
+    bgc: '#fff' // 背景颜色
 }, {
     type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
     top: '0px', // top值
     left: '0px', // left值
-    text: '王老板贼牛逼' // 文案
+    text: '王老板贼牛逼', // 文案
+    bgc: 'rgba(0, 0, 0, 0.5)' // 背景颜色
     // 数组中第0个元素为模板不用删掉
 }], [{
     type: 2,
@@ -192,7 +194,8 @@ var bgiOptions = [[{
     type: 0,
     top: '500px',
     left: '1024px',
-    text: '不吃了！'
+    text: '不吃了！',
+    bgc: '#f00'
 }], [{
     type: 1,
     top: '430px',
@@ -232,6 +235,7 @@ function changeDialog() {
         }
         dialog.style.top = bgiOptions[bgiIndex][i].top;
         dialog.style.left = bgiOptions[bgiIndex][i].left;
+        dialog.style.backgroundColor = bgiOptions[bgiIndex][i].bgc;
         dialog.innerText = bgiOptions[bgiIndex][i].text;
         dialog.show();
         dialogBox.appendChild(dialog);

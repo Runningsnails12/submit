@@ -17,6 +17,7 @@ function selectReset() {
     span.innerText = '＋';
     select.appendChild(span);
     select.title = '';
+    nowFile = null;
 }
 
 // 文件改变函数
@@ -37,16 +38,16 @@ function inputChangeFunction() {
 // 判断文件名是否满足格式
 function judge(str) {
     if (str.length > 18 || str.length < 16) {
-        alert('文件名不正确！');
+        subitFalse('文件名不正确');
         return false
     }
     var temp = str.toLowerCase().split('.').splice(-1);
     if (temp[0] != "doc" && temp[0] != "docx") {
-        alert('文件名类型不正确！');
+        subitFalse('文件名类型不正确');
         return false;
     }
     if (str.substring(0, 7) != "1915431" || str.substring(9, 10) != "_") {
-        alert('文件名命名不正确！');
+        subitFalse('文件名命名不正确');
         return false;
     }
     return true;
@@ -62,19 +63,21 @@ function upload() {
         formdata.append('file', nowFile);
         ajax({
             type: 'post',
-            url: 'shaobing/io/upload',
+            url: '/shaobing/io/upload',
             data: formdata,
             success: function (res) {
                 if (res.flag == 1) {
-                    alert('提交成功！');
+                    submitTrue();
+                    selectReset();
                 } else {
-                    alert(res.message);
+                    subitFalse(res.message);
+                    // alert(res.message);
                 }
                 submit.state = true;
             }
         }, true);
     } else {
-        alert('请先选择文件！');
+        subitFalse('请先选择文件');
         submit.state = true;
     }
 }
@@ -134,20 +137,12 @@ function submitTrue() {
 }
 
 // 提交失败函数
-function subitFalse() {
+function subitFalse(str) {
     transparentPlate.show();
     submitTipsPhoto.style.backgroundImage = 'url(img/submitFalse.png)';
-    submitTipsText.innerText = '提交失败';
+    submitTipsText.innerText = str ? str : '提交失败';
     submitTips.show();
 }
-
-document.addEventListener('keydown', function (e) {
-    if (e.key == 'y') {
-        submitTrue();
-    } else if (e.key == 'f') {
-        subitFalse();
-    }
-});
 
 // 背景相关
 

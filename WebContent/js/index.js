@@ -2,14 +2,16 @@
 var tool = new Tool(document, window);
 tool.textProhibition();
 
+// 主功能
 var main = getDom('.main'); // 获取主盒子
 var input = main.getDom('input'); // 选择文件的按钮
 var select = main.getDom('.selectBox'); // 选择文件的显示框
 var submit = main.getDom('.submit'); // 提交按钮
 
-var nowFile;
-var initialFileList = input.files;
-var nowFileList = initialFileList;
+// 文件相关
+var nowFile; // 当前文件
+var initialFileList = input.files; // 初始文件列表
+var nowFileList = initialFileList; // 当前文件列表
 
 // 重置选择文件的框
 function selectReset() {
@@ -30,11 +32,17 @@ function inputChangeFunction() {
         return;
     }
     if (!judge(file.name)) {
+
+        // 如果文件不满足格式，则将文件列表撤销
         input.files = nowFileList;
         return;
     }
+
+    // 维护文件相关变量
     nowFile = file;
     nowFileList = input.files;
+
+    // 显示到页面上
     select.innerText = file.name;
     select.title = file.name;
     select.addClass('select');
@@ -42,6 +50,8 @@ function inputChangeFunction() {
 
 // 判断文件名是否满足格式
 function judge(str) {
+
+    // 老板
     if (str.length > 18 || str.length < 16) {
         subitFalse('文件名不正确');
         return false;
@@ -81,7 +91,7 @@ function upload() {
                 selectReset();
             },
             progress: function (e) {
-                // 文件上传进度函数
+                // 文件上传进度函数（以后可能会用到）
             }
         });
     } else {
@@ -101,7 +111,7 @@ submit.addEventListener('click', function () {
     }
 });
 
-// 主盒子相关动画
+// 主盒子相关鼠标事件
 submit.addEventListener('mouseover', function () {
     main.style.transform = 'translate(-45%, -50%)';
     input.style.pointerEvents = 'none';
@@ -170,8 +180,16 @@ function subitFalse(str) {
 
 var bgi = getDom('.bgi'); // 背景图盒子
 var dialogBox = bgi.getDom('.dialogBox'); // 对话框盒子
+
+// 配置相关参数
+
+// 背景图总个数
 var cycleRange = 2; // 老板
 
+// 对话框默认圆角大小
+var dialogBorderRadius = '28px'; // 老板
+
+// 背景图片对话框配置对象
 var bgiOptions = [
     [
         {
@@ -226,15 +244,28 @@ for (var i = 1; i <= cycleRange; i++) {
 
 var bgiIndex = 1; // 当前背景图的下标
 function changeDialog() {
+
+    // 遍历配置对象中当前索引
     for (var i = 0; i < bgiOptions[bgiIndex].length; i++) {
+
+        // 获取type值
         var type = bgiOptions[bgiIndex][i].type;
-        var dialog = document.createElement('div');
-        dialog.addClass('dialog');
-        dialog.style.borderRadius = '28px';
-        dialog.hide();
+
+        // 如果是-1则不用管
         if (type == -1) {
             continue;
-        } else if (type == 0) {
+        }
+
+        // 创建新的div
+        var dialog = document.createElement('div');
+
+        // 添加类名
+        dialog.addClass('dialog');
+
+        // 设置初始圆角
+        dialog.style.borderRadius = dialogBorderRadius;
+        dialog.hide();
+        if (type == 0) {
             dialog.style.borderTopLeftRadius = '0px';
         } else if (type == 1) {
             dialog.style.borderTopRightRadius = '0px';
@@ -245,10 +276,14 @@ function changeDialog() {
         } else {
             alert('配置出错！');
         }
+
+        // 根据配置参数设置对应的值
         dialog.style.top = bgiOptions[bgiIndex][i].top;
         dialog.style.left = bgiOptions[bgiIndex][i].left;
         dialog.style.backgroundColor = bgiOptions[bgiIndex][i].bgc;
         dialog.innerText = bgiOptions[bgiIndex][i].text;
+
+        // 展示到页面中
         dialog.show();
         dialogBox.appendChild(dialog);
     }
@@ -286,7 +321,7 @@ setInterval(function () {
 //     }
 // });
 
-// 封锁devtool事件
+// 封锁devtool相关
 var admin = false;
 var adminPassword = '1234Qwer';
 var nowP = 0;

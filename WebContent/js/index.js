@@ -126,11 +126,23 @@ var submitTips = getDom('.submitTips'); // 提交结果提示框盒子
 var submitTipsPhoto = submitTips.getDom('.photo'); // 图片盒子
 var submitTipsText = submitTips.getDom('.tipsText'); // 提示文本那盒子
 var submitTipsYes = submitTips.getDom('.yes'); // 确定按钮
+submitTips.state = false;
 
-// 确定按钮点击事件
-submitTipsYes.addEventListener('click', function () {
+// 关闭提示框函数
+function closeTips() {
     submitTips.hide();
     transparentPlate.hide();
+    submitTips.state = false;
+}
+
+// 确定按钮点击事件
+submitTipsYes.addEventListener('click', closeTips);
+
+// 回车确定
+document.addEventListener('keydown', function (e) {
+    if (submitTips.state && e.key == 'Enter') {
+        closeTips();
+    }
 });
 
 // 提交成功函数
@@ -139,6 +151,7 @@ function submitTrue() {
     submitTipsPhoto.style.backgroundImage = 'url(img/submitTrue.png)';
     submitTipsText.innerText = '提交成功';
     submitTips.show();
+    submitTips.state = true;
 }
 
 // 提交失败函数
@@ -147,6 +160,7 @@ function subitFalse(str) {
     submitTipsPhoto.style.backgroundImage = 'url(img/submitFalse.png)';
     submitTipsText.innerText = str ? str : '提交失败';
     submitTips.show();
+    submitTips.state = true;
 }
 
 // 背景相关

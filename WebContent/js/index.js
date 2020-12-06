@@ -79,8 +79,11 @@ function upload() {
                 }
                 submit.state = true;
                 selectReset();
+            },
+            progress: function (e) {
+                // 文件上传进度函数
             }
-        }, true);
+        });
     } else {
         subitFalse('请先选择文件');
         submit.state = true;

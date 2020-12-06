@@ -169,7 +169,7 @@ function subitFalse(str) {
 // 背景相关
 
 var bgi = getDom('.bgi'); // 背景图盒子
-var dialog = bgi.getDom('.dialog'); // 对话框盒子
+var dialog = bgi.getDom('.dialogBox'); // 对话框盒子
 var cycleRange = 2; // 老板
 
 var bgiOptions = [{
@@ -200,10 +200,8 @@ for (var i = 1; i <= cycleRange; i++) {
 
 var bgiIndex = 1; // 当前背景图的下标
 function changeDialog() {
-    if (1 > 0) {
-        return;
-    }
-    var type = bgiOptions[bgi.Index].type;
+    var type = bgiOptions[bgiIndex].type;
+    dialog.style.borderRadius = '28px';
     if (type == -1) {
         dialog.hide();
     } else if (type == 0) {
@@ -217,6 +215,7 @@ function changeDialog() {
     } else {
         alert('配置出错！');
     }
+    console.log(bgiOptions[bgiIndex]);
     dialog.style.top = bgiOptions[bgiIndex].top;
     dialog.style.left = bgiOptions[bgiIndex].left;
     dialog.innerText = bgiOptions[bgiIndex].text;
@@ -232,9 +231,10 @@ function changeBGI() {
     bgi.children[bgiIndex].style.opacity = 0;
     bgiIndex = bgiIndex + 1 > cycleRange ? 1 : bgiIndex + 1;
     bgi.children[bgiIndex].style.opacity = 1;
+    dialog.hide();
     setTimeout(function () {
         changeDialog();
-    }, 500);
+    }, 800);
 }
 
 // 切换背景图的定时器

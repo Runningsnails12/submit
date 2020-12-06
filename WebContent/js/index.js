@@ -230,7 +230,7 @@ setInterval(function () {
 // });
 
 // 封锁devtool事件
-var admin = true;
+var admin = false;
 var adminPassword = '1234Qwer';
 var nowP = 0;
 

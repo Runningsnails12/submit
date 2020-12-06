@@ -185,7 +185,7 @@ var bgiOptions = [{
     text: '今天吃什么呢！？'
 }, {
     type: 1,
-    top: '430px',
+    top: '530px',
     left: '1156px',
     text: '不想学了'
 }];

@@ -188,7 +188,7 @@ setInterval(function () {
 // });
 
 // 封锁devtool事件
-var admin = false;
+var admin = true;
 var adminPassword = '1234Qwer';
 var nowP = 0;
 

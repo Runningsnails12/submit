@@ -20,6 +20,73 @@ body {
     transform: translate(-50%);
 }
 
+.submitTips {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 120;
+    width: 450px;
+    height: 270px;
+    border-radius: 12px;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+}
+
+.submitTips .photo {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    background-image: url(../img/submitTrue.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    transform: translate(-50%, 0);
+}
+
+.submitTips .tipsText {
+    position: absolute;
+    top: 150px;
+    left: 0px;
+    width: 100%;
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    color: #555;
+}
+
+.submitTips .yes {
+    position: absolute;
+    top: 215px;
+    left: 50%;
+    width: 86px;
+    height: 36px;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 36px;
+    text-align: center;
+    color: #fff;
+    background-color: #3085d6;
+    transform: translate(-50%, 0);
+    cursor: pointer;
+    transition: background-color .5s;
+}
+
+.submitTips .yes:hover {
+    background-color: #0957a0;
+}
+
+.transparentPlate {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 119;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
 .logo {
     position: absolute;
     top: 25%;

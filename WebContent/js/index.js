@@ -388,10 +388,10 @@ function check() {
             (function () { }
             ["constructor"]("debugger")())
         }
-        doCheck(++a)
+        doCheck(++a);
     }
     try {
-        doCheck(0)
+        doCheck(0);
     } catch (err) { }
 };
 

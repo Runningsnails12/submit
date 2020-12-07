@@ -217,8 +217,8 @@ var bgiOptions = [
         },
         {
             type: 0,
-            top: '500px',
-            left: '1024px',
+            top: '70%',
+            left: '70%',
             text: '不吃了！',
             bgc: '#f00'
         }

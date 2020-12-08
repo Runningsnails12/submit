@@ -203,11 +203,12 @@ body {
     text-align: center;
     background-color: #f1f1f1;
     transform: translate(0, -50%);
-    transition: all .5s;
+    transition: background-color .5s;
     cursor: pointer;
 }
 
 .main .submit:hover {
+    color: #fff;
     background-color: rgb(73 203 142);
 }
 

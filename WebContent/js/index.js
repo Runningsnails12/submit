@@ -210,25 +210,25 @@ var bgiOptions = [
     ],
     [
         {
-            type: 2,
-            top: '430px',
-            left: '1024px',
-            text: '今天吃什么呢！？'
-        },
-        {
-            type: 0,
-            top: '500px',
-            left: '1024px',
-            text: '不吃了！',
-            bgc: '#f00'
+            type: 1,
+            top: '79%',
+            left: '17%',
+            text: '你来交作业了吗？'
         }
     ],
     [
         {
             type: 1,
-            top: '430px',
-            left: '1156px',
+            top: '74%',
+            left: '77%',
             text: '不想学了'
+        },
+        {
+            type: 2,
+            top: '58%',
+            left: '69%',
+            text: '学废了',
+            // bgc: '#f00'
         }
     ]
 ];
@@ -305,9 +305,11 @@ function changeBGI() {
 }
 
 // 切换背景图的定时器
-setInterval(function () {
+var bgiTimer = setInterval(function () {
     changeBGI();
 }, 8000);
+
+// clearInterval(bgiTimer);
 
 // 看板娘
 // L2Dwidget.init({
@@ -388,10 +390,10 @@ function check() {
             (function () { }
             ["constructor"]("debugger")())
         }
-        doCheck(++a)
+        doCheck(++a);
     }
     try {
-        doCheck(0)
+        doCheck(0);
     } catch (err) { }
 };
 

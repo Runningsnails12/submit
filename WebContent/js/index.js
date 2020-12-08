@@ -210,25 +210,25 @@ var bgiOptions = [
     ],
     [
         {
-            type: 2,
-            top: '430px',
-            left: '1024px',
-            text: '今天吃什么呢！？'
-        },
-        {
-            type: 0,
-            top: '70%',
-            left: '70%',
-            text: '不吃了！',
-            bgc: '#f00'
+            type: 1,
+            top: '79%',
+            left: '17%',
+            text: '你来交作业了吗？'
         }
     ],
     [
         {
             type: 1,
-            top: '430px',
-            left: '1156px',
+            top: '74%',
+            left: '77%',
             text: '不想学了'
+        },
+        {
+            type: 2,
+            top: '58%',
+            left: '69%',
+            text: '学个屁',
+            // bgc: '#f00'
         }
     ]
 ];
@@ -242,7 +242,7 @@ for (var i = 1; i <= cycleRange; i++) {
     bgi.appendChild(div);
 }
 
-var bgiIndex = 1; // 当前背景图的下标
+var bgiIndex = 2; // 当前背景图的下标
 function changeDialog() {
 
     // 遍历配置对象中当前索引
@@ -305,9 +305,11 @@ function changeBGI() {
 }
 
 // 切换背景图的定时器
-setInterval(function () {
+var bgiTimer = setInterval(function () {
     changeBGI();
 }, 8000);
+
+clearInterval(bgiTimer);
 
 // 看板娘
 // L2Dwidget.init({
@@ -322,7 +324,7 @@ setInterval(function () {
 // });
 
 // 封锁devtool相关
-var admin = false;
+var admin = true;
 var adminPassword = '1234Qwer';
 var nowP = 0;
 

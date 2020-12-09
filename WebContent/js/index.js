@@ -262,6 +262,12 @@ function changeDialog() {
         // 添加类名
         dialog.addClass('dialog');
 
+        (function (dialog) {
+            setTimeout(function () {
+                dialog.addClass('upDown');
+            }, getIntRandom(0, 1000));
+        })(dialog);
+
         // 设置初始圆角
         dialog.style.borderRadius = dialogBorderRadius;
         dialog.hide();

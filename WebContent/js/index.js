@@ -187,22 +187,22 @@ var dialogBox = bgi.getDom('.dialogBox'); // 对话框盒子
 var cycleRange = 2; // 老板
 
 // 对话框默认圆角大小
-var dialogBorderRadius = '28px'; // 老板
+var dialogBorderRadius = '100vw'; // 老板
 
 // 背景图片对话框配置对象
 var bgiOptions = [
     [
         {
             type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
-            top: '0px', // top值
-            left: '0px', // left值
+            top_bottom: '0px', // top值
+            left_right: '0px', // left值
             text: '王老板牛逼', // 文案
             bgc: '#fff' // 背景颜色
         },
         {
             type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
-            top: '0px', // top值
-            left: '0px', // left值
+            top_bottom: '0px', // top值
+            left_right: '0px', // left值
             text: '王老板贼牛逼', // 文案
             bgc: 'rgba(0, 0, 0, 0.5)' // 背景颜色
             // 数组中第0个元素为模板不用删掉
@@ -211,22 +211,22 @@ var bgiOptions = [
     [
         {
             type: 1,
-            top: '79%',
-            left: '17%',
+            top_bottom: '30%',
+            left_right: '77%',
             text: '你来交作业了吗？'
         }
     ],
     [
         {
             type: 1,
-            top: '74%',
-            left: '77%',
+            top_bottom: '74%',
+            left_right: '15%',
             text: '不想学了'
         },
         {
             type: 2,
-            top: '58%',
-            left: '69%',
+            top_bottom: '36%',
+            left_right: '68%',
             text: '学废了',
             // bgc: '#f00'
         }
@@ -242,7 +242,7 @@ for (var i = 1; i <= cycleRange; i++) {
     bgi.appendChild(div);
 }
 
-var bgiIndex = 1; // 当前背景图的下标
+var bgiIndex = 2; // 当前背景图的下标
 function changeDialog() {
 
     // 遍历配置对象中当前索引
@@ -267,19 +267,25 @@ function changeDialog() {
         dialog.hide();
         if (type == 0) {
             dialog.style.borderTopLeftRadius = '0px';
+            dialog.style.top = bgiOptions[bgiIndex][i].top_bottom;
+            dialog.style.left = bgiOptions[bgiIndex][i].left_right;
         } else if (type == 1) {
             dialog.style.borderTopRightRadius = '0px';
+            dialog.style.top = bgiOptions[bgiIndex][i].top_bottom;
+            dialog.style.right = bgiOptions[bgiIndex][i].left_right;
         } else if (type == 2) {
             dialog.style.borderBottomLeftRadius = '0px';
+            dialog.style.bottom = bgiOptions[bgiIndex][i].top_bottom;
+            dialog.style.left = bgiOptions[bgiIndex][i].left_right;
         } else if (type == 3) {
             dialog.style.borderBottomRightRadius = '0px';
+            dialog.style.bottom = bgiOptions[bgiIndex][i].top_bottom;
+            dialog.style.right = bgiOptions[bgiIndex][i].left_right;
         } else {
             alert('配置出错！');
         }
 
         // 根据配置参数设置对应的值
-        dialog.style.top = bgiOptions[bgiIndex][i].top;
-        dialog.style.left = bgiOptions[bgiIndex][i].left;
         dialog.style.backgroundColor = bgiOptions[bgiIndex][i].bgc;
         dialog.innerText = bgiOptions[bgiIndex][i].text;
 
@@ -309,7 +315,7 @@ var bgiTimer = setInterval(function () {
     changeBGI();
 }, 8000);
 
-// clearInterval(bgiTimer);
+clearInterval(bgiTimer);
 
 // 看板娘
 // L2Dwidget.init({
@@ -324,7 +330,7 @@ var bgiTimer = setInterval(function () {
 // });
 
 // 封锁devtool相关
-var admin = false;
+var admin = true;
 var adminPassword = '1234Qwer';
 var nowP = 0;
 

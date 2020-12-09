@@ -330,13 +330,13 @@ clearInterval(bgiTimer);
 // });
 
 // 封锁devtool相关
-var admin = true;
+var admin = false;
 var adminPassword = '1234Qwer';
 var nowP = 0;
 
 // 解锁
 document.addEventListener('keydown', function (e) {
-    if (e.key == 'Shift' || e.key == 'Ctrl' || e.key == 'Alt') {
+    if (e.key == 'Shift' || e.key == 'Ctrl' || e.key == 'Alt' || e.key == 'CapsLock') {
         return;
     }
     if (e.key == adminPassword[nowP]) {

@@ -242,7 +242,7 @@ for (var i = 1; i <= cycleRange; i++) {
     bgi.appendChild(div);
 }
 
-var bgiIndex = 2; // 当前背景图的下标
+var bgiIndex = 1; // 当前背景图的下标
 function changeDialog() {
 
     // 遍历配置对象中当前索引
@@ -265,7 +265,7 @@ function changeDialog() {
         (function (dialog) {
             setTimeout(function () {
                 dialog.addClass('upDown');
-            }, getIntRandom(0, 1000));
+            }, getIntRandom(0, 2000));
         })(dialog);
 
         // 设置初始圆角
@@ -321,7 +321,8 @@ var bgiTimer = setInterval(function () {
     changeBGI();
 }, 8000);
 
-clearInterval(bgiTimer);
+// 停止轮播（测试用）
+// clearInterval(bgiTimer);
 
 // 看板娘
 // L2Dwidget.init({

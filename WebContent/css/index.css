@@ -215,8 +215,8 @@ body {
 .main .submit::after {
     position: absolute;
     top: 50%;
-    left: 0;
-    width: 116px;
+    left: -8px;
+    width: 126px;
     height: 80px;
     opacity: 0;
     transform: translate(0, -50%);

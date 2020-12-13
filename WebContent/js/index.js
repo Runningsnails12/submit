@@ -211,8 +211,8 @@ var bgiOptions = [
     [
         {
             type: 1,
-            top_bottom: '30%',
-            left_right: '77%',
+            top_bottom: '29%',
+            left_right: '66%',
             text: '你来交作业了吗？'
         }
     ],

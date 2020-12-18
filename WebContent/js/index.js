@@ -130,7 +130,15 @@ function judge(str) {
         }
         return true;
     } else if (subject == '多媒体') {
-        return false;
+        var temp = str.toLowerCase().split('.').splice(-1);//191543XXX-XXX-XXX
+        if (temp[0] != "avi" && temp[0] != "mp4" && temp[0] != "mpeg" && temp[0] != "flv" && temp[0] != "wmv" && temp[0] != "mov" && temp[0] != "3gp") {
+            subitFalse('文件名类型不正确');
+            return false;
+        } else if (str.substring(0, 6) != "191543" || (str.substring(6, 7) != "1" && str.substring(6, 7) != "2") || str.substring(9, 10) != "-" || (str.substring(12, 13) != "-" && str.substring(13, 14) != "-")) {
+            subitFalse('文件名命名不正确');
+            return false;
+        }
+        return true;
     } else {
         alert('配置出错');
         console.log('配置出错');

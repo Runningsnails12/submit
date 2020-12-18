@@ -113,7 +113,6 @@ function inputChangeFunction() {
 
 // 判断文件名是否满足格式
 function judge(str) {
-
     if (subject == 'javaweb') {
         // 老板
         if (str.length > 18 || str.length < 16) {
@@ -261,6 +260,7 @@ for (var i = 1; i <= cycleRange; i++) {
     bgi.appendChild(div);
 }
 
+// 修改小对话框函数
 function changeDialog() {
 
     // 遍历配置对象中当前索引
@@ -307,6 +307,7 @@ function changeDialog() {
             dialog.style.right = bgiOptions[bgiIndex][i].left_right;
         } else {
             alert('配置出错！');
+            console.log('配置出错！');
         }
 
         // 根据配置参数设置对应的值
@@ -345,6 +346,7 @@ if (!rotation) {
 }
 
 // 看板娘
+
 // L2Dwidget.init({
 //     "display": {
 //         "superSample": 2,

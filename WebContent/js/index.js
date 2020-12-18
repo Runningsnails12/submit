@@ -2,7 +2,7 @@
 // 设置参数
 
 // 交作业的科目(javaweb,多媒体)
-var subject = 'javaweb';
+var subject = '多媒体';
 
 var cycleRange = 2; // 背景图总个数
 
@@ -130,7 +130,7 @@ function judge(str) {
         }
         return true;
     } else if (subject == '多媒体') {
-
+        return false;
     } else {
         alert('配置出错');
         console.log('配置出错');

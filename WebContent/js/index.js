@@ -1,4 +1,67 @@
-﻿// 设置文本不可被选中
+﻿//#region 
+// 设置参数
+
+// 交作业的科目(javaweb,多媒体)
+var subject = 'javaweb';
+
+var cycleRange = 2; // 背景图总个数
+
+var dialogBorderRadius = '100vw'; // 对话框默认圆角大小板
+
+var bgiIndex = 1; // 背景图的初始下标
+
+var rotation = true; // 是否轮播
+
+var adminState = true; // 是否开启控制台锁
+
+var adminPassword = '1234Qwer'; // 控制台密码
+
+// 背景图片对话框配置对象
+var bgiOptions = [
+    [
+        {
+            type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
+            top_bottom: '0px', // top值
+            left_right: '0px', // left值
+            text: '王老板牛逼', // 文案
+            bgc: '#fff' // 背景颜色
+        },
+        {
+            type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
+            top_bottom: '0px', // top值
+            left_right: '0px', // left值
+            text: '王老板贼牛逼', // 文案
+            bgc: 'rgba(0, 0, 0, 0.5)' // 背景颜色
+            // 数组中第0个元素为模板不用删掉
+        }
+    ],
+    [
+        {
+            type: 1,
+            top_bottom: '29%',
+            left_right: '66%',
+            text: '你来交作业了吗？'
+        }
+    ],
+    [
+        {
+            type: 1,
+            top_bottom: '74%',
+            left_right: '15%',
+            text: '不想学了'
+        },
+        {
+            type: 2,
+            top_bottom: '36%',
+            left_right: '68%',
+            text: '学废了',
+            // bgc: '#f00'
+        }
+    ]
+];
+//#endregion
+
+// 设置文本不可被选中
 var tool = new Tool(document, window);
 tool.textProhibition();
 
@@ -51,21 +114,29 @@ function inputChangeFunction() {
 // 判断文件名是否满足格式
 function judge(str) {
 
-    // 老板
-    if (str.length > 18 || str.length < 16) {
-        subitFalse('文件名不正确');
-        return false;
-    } else {
-        var temp = str.toLowerCase().split('.').splice(-1);
-        if (temp[0] != "doc" && temp[0] != "docx") {
-            subitFalse('文件名类型不正确');
+    if (subject == 'javaweb') {
+        // 老板
+        if (str.length > 18 || str.length < 16) {
+            subitFalse('文件名不正确');
             return false;
-        } else if (str.substring(0, 7) != "1915431" || str.substring(9, 10) != "_") {
-            subitFalse('文件名命名不正确');
-            return false;
+        } else {
+            var temp = str.toLowerCase().split('.').splice(-1);
+            if (temp[0] != "doc" && temp[0] != "docx") {
+                subitFalse('文件名类型不正确');
+                return false;
+            } else if (str.substring(0, 7) != "1915431" || str.substring(9, 10) != "_") {
+                subitFalse('文件名命名不正确');
+                return false;
+            }
         }
+        return true;
+    } else if (subject == '多媒体') {
+
+    } else {
+        alert('配置出错');
+        console.log('配置出错');
+        return false;
     }
-    return true;
 }
 
 // 添加选择文件事件
@@ -181,58 +252,6 @@ function subitFalse(str) {
 var bgi = getDom('.bgi'); // 背景图盒子
 var dialogBox = bgi.getDom('.dialogBox'); // 对话框盒子
 
-// 配置相关参数
-
-// 背景图总个数
-var cycleRange = 2; // 老板
-
-// 对话框默认圆角大小
-var dialogBorderRadius = '100vw'; // 老板
-
-// 背景图片对话框配置对象
-var bgiOptions = [
-    [
-        {
-            type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
-            top_bottom: '0px', // top值
-            left_right: '0px', // left值
-            text: '王老板牛逼', // 文案
-            bgc: '#fff' // 背景颜色
-        },
-        {
-            type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
-            top_bottom: '0px', // top值
-            left_right: '0px', // left值
-            text: '王老板贼牛逼', // 文案
-            bgc: 'rgba(0, 0, 0, 0.5)' // 背景颜色
-            // 数组中第0个元素为模板不用删掉
-        }
-    ],
-    [
-        {
-            type: 1,
-            top_bottom: '29%',
-            left_right: '66%',
-            text: '你来交作业了吗？'
-        }
-    ],
-    [
-        {
-            type: 1,
-            top_bottom: '74%',
-            left_right: '15%',
-            text: '不想学了'
-        },
-        {
-            type: 2,
-            top_bottom: '36%',
-            left_right: '68%',
-            text: '学废了',
-            // bgc: '#f00'
-        }
-    ]
-];
-
 // 初始化背景图
 for (var i = 1; i <= cycleRange; i++) {
     var div = document.createElement('div');
@@ -242,7 +261,6 @@ for (var i = 1; i <= cycleRange; i++) {
     bgi.appendChild(div);
 }
 
-var bgiIndex = 1; // 当前背景图的下标
 function changeDialog() {
 
     // 遍历配置对象中当前索引
@@ -321,8 +339,10 @@ var bgiTimer = setInterval(function () {
     changeBGI();
 }, 8000);
 
-// 停止轮播（测试用）
-// clearInterval(bgiTimer);
+// 停止轮播
+if (!rotation) {
+    clearInterval(bgiTimer);
+}
 
 // 看板娘
 // L2Dwidget.init({
@@ -337,8 +357,7 @@ var bgiTimer = setInterval(function () {
 // });
 
 // 封锁devtool相关
-var admin = false;
-var adminPassword = '1234Qwer';
+var admin = !adminState;
 var nowP = 0;
 
 // 解锁

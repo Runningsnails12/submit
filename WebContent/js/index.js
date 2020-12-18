@@ -94,6 +94,11 @@ function inputChangeFunction() {
     if (!file) {
         return;
     }
+    //判断文件大小
+    if (file.size > 200 * 1024 * 1024) {
+        subitFalse('文件太大了');
+        return;
+    }
     if (!judge(file.name)) {
 
         // 如果文件不满足格式，则将文件列表撤销
@@ -114,7 +119,6 @@ function inputChangeFunction() {
 // 判断文件名是否满足格式
 function judge(str) {
     if (subject == 'javaweb') {
-        // 老板
         if (str.length > 18 || str.length < 16) {
             subitFalse('文件名不正确');
             return false;

@@ -49,44 +49,15 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static('C:\\Users\\Lenovo\\Desktop\\lsjs'));
 
-function judge(str) {
-    if (str.length > 18 || str.length < 16) {
-        return '文件名不正确';
-    }
-    var temp = str.toLowerCase().split('.').splice(-1);
-    if (temp[0] != "doc" && temp[0] != "docx") {
-        return '文件名类型不正确';
-    }
-    if (str.substring(0, 7) != "1915431" || str.substring(9, 10) != "_") {
-        return '文件名命名不正确';
-    }
-    return true;
-}
 app.post('/shaobing/io/upload', function (req, res) {
     var form = new formidable.IncomingForm();
     form.uploadDir = path.join(__dirname, 'uploads'); // 设置上传的文件保存的路径
     form.keepExtensions = true; // 上传的文件保留后缀名
     form.parse(req, function (err, fields, files) {
-        var fileName = files.file.name;
-        var judgeFlag = judge(fileName);
-        if (judgeFlag == true) {
-            if (fileName == '191543139_测试中.docx') {
-                res.send({
-                    flag: 0,
-                    message: '文件名不正确'
-                });
-            } else {
-                res.send({
-                    flag: 1,
-                    message: '提交成功'
-                });
-            }
-        } else {
-            res.send({
-                flag: 0,
-                message: judgeFlag
-            });
-        }
+        res.send({
+            flag: 1,
+            message: '提交成功'
+        });
     });
 });
 app.listen(8848);

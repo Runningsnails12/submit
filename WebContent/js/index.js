@@ -94,12 +94,8 @@ function inputChangeFunction() {
     if (!file) {
         return;
     }
-    //判断文件大小
-    if (file.size > 200 * 1024 * 1024) {
-        subitFalse('文件太大了');
-        return;
-    }
-    if (!judge(file.name)) {
+
+    if (!judge(file)) {
 
         // 如果文件不满足格式，则将文件列表撤销
         input.files = nowFileList;
@@ -117,18 +113,19 @@ function inputChangeFunction() {
 }
 
 // 判断文件名是否满足格式
-function judge(str) {
+function judge(file) {
+    var str = file.name;
     if (subject == 'javaweb') {
         if (str.length > 18 || str.length < 16) {
-            subitFalse('文件名不正确');
+            submitFalse('文件名不正确');
             return false;
         } else {
             var temp = str.toLowerCase().split('.').splice(-1);
             if (temp[0] != "doc" && temp[0] != "docx") {
-                subitFalse('文件名类型不正确');
+                submitFalse('文件名类型不正确');
                 return false;
             } else if (str.substring(0, 7) != "1915431" || str.substring(9, 10) != "_") {
-                subitFalse('文件名命名不正确');
+                submitFalse('文件名命名不正确');
                 return false;
             }
         }
@@ -136,10 +133,13 @@ function judge(str) {
     } else if (subject == '多媒体') {
         var temp = str.toLowerCase().split('.').splice(-1);//191543XXX-XXX-XXX
         if (temp[0] != "avi" && temp[0] != "mp4" && temp[0] != "mpeg" && temp[0] != "flv" && temp[0] != "wmv" && temp[0] != "mov" && temp[0] != "3gp") {
-            subitFalse('文件名类型不正确');
+            submitFalse('文件名类型不正确');
             return false;
         } else if (str.substring(0, 6) != "191543" || (str.substring(6, 7) != "1" && str.substring(6, 7) != "2") || str.substring(9, 10) != "-" || (str.substring(12, 13) != "-" && str.substring(13, 14) != "-")) {
-            subitFalse('文件名命名不正确');
+            submitFalse('文件名命名不正确');
+            return false;
+        } else if (file.size > 200 * 1024 * 1024) {
+            submitFalse('文件不能超过200M');
             return false;
         }
         return true;
@@ -163,21 +163,25 @@ function upload() {
             url: '/shaobing/io/upload',
             data: formdata,
             success: function (res) {
-                if (res.flag == 1) {
-                    submitTrue();
-                } else {
-                    subitFalse(res.message);
-                    // alert(res.message);
-                }
-                submit.state = true;
-                selectReset();
+                closeTips();
+                setTimeout(function () {
+                    if (res.flag == 1) {
+                        submitTrue();
+                    } else {
+                        submitFalse(res.message);
+                        // alert(res.message);
+                    }
+                    submit.state = true;
+                    selectReset();
+                }, 50);
             },
             progress: function (e) {
                 // 文件上传进度函数（以后可能会用到）
             }
         });
+        submitLoading();
     } else {
-        subitFalse('请先选择文件');
+        submitFalse('请先选择文件');
         submit.state = true;
     }
 }
@@ -247,15 +251,27 @@ function submitTrue() {
     submitTipsText.innerText = '提交成功';
     submitTips.show();
     submitTips.state = true;
+    submitTipsYes.show();
+}
+
+// 加载中函数
+function submitLoading() {
+    transparentPlate.show();
+    submitTipsPhoto.style.backgroundImage = 'url(img/loading.gif)';
+    submitTipsText.innerText = '上传中';
+    submitTips.show();
+    submitTips.state = true;
+    submitTipsYes.hide();
 }
 
 // 提交失败函数
-function subitFalse(str) {
+function submitFalse(str) {
     transparentPlate.show();
     submitTipsPhoto.style.backgroundImage = 'url(img/submitFalse.png)';
     submitTipsText.innerText = str ? str : '提交失败';
     submitTips.show();
     submitTips.state = true;
+    submitTipsYes.show();
 }
 
 // 背景相关

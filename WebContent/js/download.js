@@ -1,7 +1,7 @@
 var body = getDom('body');
 function run(path) {
     var urlArr = new Array();
-    for (var i = 0; i < x.length; i++) {
+    for (var i = 0; i < path.length; i++) {
         urlArr.push(path[i].split('\\')[3]);
     }
     urlArr.sort();

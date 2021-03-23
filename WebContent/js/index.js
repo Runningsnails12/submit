@@ -1,8 +1,8 @@
 ﻿//#region 
 // 设置参数
 
-// 交作业的科目(javaweb,多媒体)
-var subject = '多媒体';
+// 交作业的科目(javaweb,多媒体,计组)
+var subject = '计组';
 
 var cycleRange = 2; // 背景图总个数
 
@@ -18,8 +18,7 @@ var adminPassword = '1234Qwer'; // 控制台密码
 
 // 背景图片对话框配置对象
 var bgiOptions = [
-    [
-        {
+    [{
             type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
             top_bottom: '0px', // top值
             left_right: '0px', // left值
@@ -35,16 +34,13 @@ var bgiOptions = [
             // 数组中第0个元素为模板不用删掉
         }
     ],
-    [
-        {
-            type: 1,
-            top_bottom: '29%',
-            left_right: '66%',
-            text: '你来交作业了吗？'
-        }
-    ],
-    [
-        {
+    [{
+        type: 1,
+        top_bottom: '29%',
+        left_right: '66%',
+        text: '你来交作业了吗？'
+    }],
+    [{
             type: 1,
             top_bottom: '74%',
             left_right: '15%',
@@ -131,7 +127,7 @@ function judge(file) {
         }
         return true;
     } else if (subject == '多媒体') {
-        var temp = str.toLowerCase().split('.').splice(-1);//191543XXX-XXX-XXX
+        var temp = str.toLowerCase().split('.').splice(-1); //191543XXX-XXX-XXX
         if (temp[0] != "avi" && temp[0] != "mp4" && temp[0] != "mpeg" && temp[0] != "flv" && temp[0] != "wmv" && temp[0] != "mov" && temp[0] != "3gp") {
             submitFalse('文件名类型不正确');
             return false;
@@ -141,6 +137,16 @@ function judge(file) {
         } else if (file.size > 200 * 1024 * 1024) {
             submitFalse('文件不能超过200M');
             return false;
+        }
+        return true;
+    } else if (subject == '计组') {
+        var temp = str.toLowerCase().split('.').splice(-1);
+        var head = str.toLowerCase().split('.')[0];
+        if (temp[0] != "doc" && temp[0] != "docx") {
+            submitFalse('文件名类型不正确');
+            return false;
+        } else if (str.substring(0, 7) != "1915431" || head.substring(head.length - 3, head.length) != '实验一') {
+            submitFalse('文件名命名不正确');
         }
         return true;
     } else {
@@ -444,19 +450,20 @@ function check() {
     if (admin) {
         return;
     }
+
     function doCheck(a) {
         if (("" + a / a)["length"] !== 1 || a % 20 === 0) {
-            (function () { }
-            ["constructor"]("debugger")())
+            (function () {}
+                ["constructor"]("debugger")())
         } else {
-            (function () { }
-            ["constructor"]("debugger")())
+            (function () {}
+                ["constructor"]("debugger")())
         }
         doCheck(++a);
     }
     try {
         doCheck(0);
-    } catch (err) { }
+    } catch (err) {}
 };
 
 var debuggerTimer = setInterval(function () {

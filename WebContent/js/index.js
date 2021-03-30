@@ -1,8 +1,8 @@
 ﻿//#region 
 // 设置参数
 
-// 交作业的科目(javaweb,多媒体,计组)
-var subject = '计组';
+// 交作业的科目(javaweb,多媒体,计组,javaee,python)
+var subject = 'python';
 
 var cycleRange = 2; // 背景图总个数
 
@@ -147,6 +147,37 @@ function judge(file) {
             return false;
         } else if (str.substring(0, 7) != "1915431" || head.substring(head.length - 3, head.length) != '实验一') {
             submitFalse('文件名命名不正确');
+            return false;
+        }
+        return true;
+    } else if (subject == 'javeee') {
+        var temp = str.toLowerCase().split('.').splice(-1);
+        var head = str.toLowerCase().split('.')[0];
+        if (temp[0] != "doc" && temp[0] != "docx") {
+            submitFalse('文件名类型不正确');
+            return false;
+        } else if (str.substring(0, 7) != "1915431" || head.substring(head.length - 3, head.length) != '实验一') {
+            submitFalse('文件名命名不正确');
+            return false;
+        }
+        return true;
+    } else if (subject == 'python') {
+        var temp = str.toLowerCase().split('.').splice(-1);
+        var head = '《Python程序设计》实验报告1(实验3)-1915431';
+        var last = str.split(head)[1];
+        var num = null;
+        if (last != null) {
+            try {
+                num = last.substring(0, 2) - 0;
+            } catch (e) {}
+        }
+        console.log(num);
+        if (temp[0] != "doc" && temp[0] != "docx") {
+            submitFalse('文件名类型不正确');
+            return false;
+        } else if (str.indexOf(head) != 0 || (num == null) || !(num >= 1 && num <= 37)) {
+            submitFalse('文件名命名不正确');
+            return false;
         }
         return true;
     } else {

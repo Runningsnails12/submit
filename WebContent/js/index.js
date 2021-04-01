@@ -2,22 +2,24 @@
 // 设置参数
 
 // 交作业的科目(javaweb,多媒体,计组,javaee,python)
-var subject = 'python';
+let subject = 'python';
 
-var cycleRange = 2; // 背景图总个数
+let cycleRange = 2; // 背景图总个数
 
-var dialogBorderRadius = '100vw'; // 对话框默认圆角大小板
+let dialogBorderRadius = '100vw'; // 对话框默认圆角大小板
 
-var bgiIndex = 1; // 背景图的初始下标
+let bgiIndex = 1; // 背景图的初始下标
 
-var rotation = true; // 是否轮播
+let rotation = true; // 是否轮播
 
-var adminState = true; // 是否开启控制台锁
+let adminState = true; // 是否开启控制台锁
 
-var adminPassword = '1234Qwer'; // 控制台密码
+let adminPassword = '1234Qwer'; // 控制台密码
 
+let ddl = new Date('2021-3-31 09:00:00'); // 截止日期(格式：yyyy-mm-dd hh:mm:ss)
+console.log(ddl);
 // 背景图片对话框配置对象
-var bgiOptions = [
+let bgiOptions = [
     [{
             type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
             top_bottom: '0px', // top值
@@ -58,25 +60,25 @@ var bgiOptions = [
 //#endregion
 
 // 设置文本不可被选中
-var tool = new Tool(document, window);
+let tool = new Tool(document, window);
 tool.textProhibition();
 
 // 主功能
-var main = getDom('.main'); // 获取主盒子
-var input = main.getDom('input'); // 选择文件的按钮
-var select = main.getDom('.selectBox'); // 选择文件的显示框
-var submit = main.getDom('.submit'); // 提交按钮
+let main = getDom('.main'); // 获取主盒子
+let input = main.getDom('input'); // 选择文件的按钮
+let select = main.getDom('.selectBox'); // 选择文件的显示框
+let submit = main.getDom('.submit'); // 提交按钮
 
 // 文件相关
-var nowFile; // 当前文件
-var initialFileList = input.files; // 初始文件列表
-var nowFileList = initialFileList; // 当前文件列表
+let nowFile; // 当前文件
+let initialFileList = input.files; // 初始文件列表
+let nowFileList = initialFileList; // 当前文件列表
 
 // 重置选择文件的框
 function selectReset() {
     select.removeClass('select');
     select.innerText = '选择文件';
-    var span = document.createElement('span');
+    let span = document.createElement('span');
     span.innerText = '＋';
     select.appendChild(span);
     select.title = '';
@@ -86,7 +88,7 @@ function selectReset() {
 
 // 文件改变函数
 function inputChangeFunction() {
-    var file = input.files[0];
+    let file = input.files[0];
     if (!file) {
         return;
     }
@@ -110,13 +112,13 @@ function inputChangeFunction() {
 
 // 判断文件名是否满足格式
 function judge(file) {
-    var str = file.name;
+    let str = file.name;
     if (subject == 'javaweb') {
         if (str.length > 18 || str.length < 16) {
             submitFalse('文件名不正确');
             return false;
         } else {
-            var temp = str.toLowerCase().split('.').splice(-1);
+            let temp = str.toLowerCase().split('.').splice(-1);
             if (temp[0] != "doc" && temp[0] != "docx") {
                 submitFalse('文件名类型不正确');
                 return false;
@@ -127,7 +129,7 @@ function judge(file) {
         }
         return true;
     } else if (subject == '多媒体') {
-        var temp = str.toLowerCase().split('.').splice(-1); //191543XXX-XXX-XXX
+        let temp = str.toLowerCase().split('.').splice(-1); //191543XXX-XXX-XXX
         if (temp[0] != "avi" && temp[0] != "mp4" && temp[0] != "mpeg" && temp[0] != "flv" && temp[0] != "wmv" && temp[0] != "mov" && temp[0] != "3gp") {
             submitFalse('文件名类型不正确');
             return false;
@@ -140,8 +142,8 @@ function judge(file) {
         }
         return true;
     } else if (subject == '计组') {
-        var temp = str.toLowerCase().split('.').splice(-1);
-        var head = str.toLowerCase().split('.')[0];
+        let temp = str.toLowerCase().split('.').splice(-1);
+        let head = str.toLowerCase().split('.')[0];
         if (temp[0] != "doc" && temp[0] != "docx") {
             submitFalse('文件名类型不正确');
             return false;
@@ -151,8 +153,8 @@ function judge(file) {
         }
         return true;
     } else if (subject == 'javeee') {
-        var temp = str.toLowerCase().split('.').splice(-1);
-        var head = str.toLowerCase().split('.')[0];
+        let temp = str.toLowerCase().split('.').splice(-1);
+        let head = str.toLowerCase().split('.')[0];
         if (temp[0] != "doc" && temp[0] != "docx") {
             submitFalse('文件名类型不正确');
             return false;
@@ -162,10 +164,10 @@ function judge(file) {
         }
         return true;
     } else if (subject == 'python') {
-        var temp = str.toLowerCase().split('.').splice(-1);
-        var head = '《Python程序设计》实验报告1(实验3)-1915431';
-        var last = str.split(head)[1];
-        var num = null;
+        let temp = str.toLowerCase().split('.').splice(-1);
+        let head = '《Python程序设计》实验报告1(实验3)-1915431';
+        let last = str.split(head)[1];
+        let num = null;
         if (last != null) {
             try {
                 num = last.substring(0, 2) - 0;
@@ -193,30 +195,35 @@ input.addEventListener('change', inputChangeFunction);
 // 提交函数
 function upload() {
     if (nowFile) {
-        var formdata = new FormData();
-        formdata.append('file', nowFile);
-        ajax({
-            type: 'post',
-            url: '/shaobing/io/upload',
-            data: formdata,
-            success: function (res) {
-                closeTips();
-                setTimeout(function () {
-                    if (res.flag == 1) {
-                        submitTrue();
-                    } else {
-                        submitFalse(res.message);
-                        // alert(res.message);
-                    }
-                    submit.state = true;
-                    selectReset();
-                }, 50);
-            },
-            progress: function (e) {
-                // 文件上传进度函数（以后可能会用到）
-            }
-        });
-        submitLoading();
+        if (Date.now() < ddl) {
+            let formdata = new FormData();
+            formdata.append('file', nowFile);
+            ajax({
+                type: 'post',
+                url: '/shaobing/io/upload',
+                data: formdata,
+                success: function (res) {
+                    closeTips();
+                    setTimeout(function () {
+                        if (res.flag == 1) {
+                            submitTrue();
+                        } else {
+                            submitFalse(res.message);
+                            // alert(res.message);
+                        }
+                        submit.state = true;
+                        selectReset();
+                    }, 50);
+                },
+                progress: function (e) {
+                    // 文件上传进度函数（以后可能会用到）
+                }
+            });
+            submitLoading();
+        } else {
+            submitFalse('截止日期已过，不可提交');
+            submit.state = true;
+        }
     } else {
         submitFalse('请先选择文件');
         submit.state = true;
@@ -254,14 +261,14 @@ input.addEventListener('mouseover', function () {
 });
 
 // 半透明挡板
-var transparentPlate = getDom('.transparentPlate');
+let transparentPlate = getDom('.transparentPlate');
 
 // 提交结果提示框相关
 
-var submitTips = getDom('.submitTips'); // 提交结果提示框盒子
-var submitTipsPhoto = submitTips.getDom('.photo'); // 图片盒子
-var submitTipsText = submitTips.getDom('.tipsText'); // 提示文本那盒子
-var submitTipsYes = submitTips.getDom('.yes'); // 确定按钮
+let submitTips = getDom('.submitTips'); // 提交结果提示框盒子
+let submitTipsPhoto = submitTips.getDom('.photo'); // 图片盒子
+let submitTipsText = submitTips.getDom('.tipsText'); // 提示文本那盒子
+let submitTipsYes = submitTips.getDom('.yes'); // 确定按钮
 submitTips.state = false;
 
 // 关闭提示框函数
@@ -313,12 +320,12 @@ function submitFalse(str) {
 
 // 背景相关
 
-var bgi = getDom('.bgi'); // 背景图盒子
-var dialogBox = bgi.getDom('.dialogBox'); // 对话框盒子
+let bgi = getDom('.bgi'); // 背景图盒子
+let dialogBox = bgi.getDom('.dialogBox'); // 对话框盒子
 
 // 初始化背景图
-for (var i = 1; i <= cycleRange; i++) {
-    var div = document.createElement('div');
+for (let i = 1; i <= cycleRange; i++) {
+    let div = document.createElement('div');
     div.addClass('photo');
     div.style.backgroundImage = 'url(img/bg' + i + '.jpg)';
     div.style.opacity = 0;
@@ -329,10 +336,10 @@ for (var i = 1; i <= cycleRange; i++) {
 function changeDialog() {
 
     // 遍历配置对象中当前索引
-    for (var i = 0; i < bgiOptions[bgiIndex].length; i++) {
+    for (let i = 0; i < bgiOptions[bgiIndex].length; i++) {
 
         // 获取type值
-        var type = bgiOptions[bgiIndex][i].type;
+        let type = bgiOptions[bgiIndex][i].type;
 
         // 如果是-1则不用管
         if (type == -1) {
@@ -340,7 +347,7 @@ function changeDialog() {
         }
 
         // 创建新的div
-        var dialog = document.createElement('div');
+        let dialog = document.createElement('div');
 
         // 添加类名
         dialog.addClass('dialog');
@@ -401,7 +408,7 @@ function changeBGI() {
 }
 
 // 切换背景图的定时器
-var bgiTimer = setInterval(function () {
+let bgiTimer = setInterval(function () {
     changeBGI();
 }, 8000);
 
@@ -424,8 +431,8 @@ if (!rotation) {
 // });
 
 // 封锁devtool相关
-var admin = !adminState;
-var nowP = 0;
+let admin = !adminState;
+let nowP = 0;
 
 // 解锁
 document.addEventListener('keydown', function (e) {
@@ -497,7 +504,7 @@ function check() {
     } catch (err) {}
 };
 
-var debuggerTimer = setInterval(function () {
+let debuggerTimer = setInterval(function () {
     check();
 }, 4000);
 

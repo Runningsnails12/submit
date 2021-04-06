@@ -1,8 +1,8 @@
 ﻿//#region 
 // 设置参数
 
-// 交作业的科目(javaweb,多媒体,计组,javaee,python)
-let subject = 'python';
+// 交作业的科目(javaweb,多媒体,计组,javaee,python,计网)
+let subject = '计网';
 
 let cycleRange = 2; // 背景图总个数
 
@@ -16,8 +16,8 @@ let adminState = true; // 是否开启控制台锁
 
 let adminPassword = '1234Qwer'; // 控制台密码
 
-let ddl = new Date('2021-3-31 09:00:00'); // 截止日期(格式：yyyy-mm-dd hh:mm:ss)
-console.log(ddl);
+let ddl = new Date('2021-4-12 18:00:00'); // 截止日期(格式：yyyy-mm-dd hh:mm:ss)
+
 // 背景图片对话框配置对象
 let bgiOptions = [
     [{
@@ -166,6 +166,25 @@ function judge(file) {
     } else if (subject == 'python') {
         let temp = str.toLowerCase().split('.').splice(-1);
         let head = '《Python程序设计》实验报告1(实验3)-1915431';
+        let last = str.split(head)[1];
+        let num = null;
+        if (last != null) {
+            try {
+                num = last.substring(0, 2) - 0;
+            } catch (e) {}
+        }
+        console.log(num);
+        if (temp[0] != "doc" && temp[0] != "docx") {
+            submitFalse('文件名类型不正确');
+            return false;
+        } else if (str.indexOf(head) != 0 || (num == null) || !(num >= 1 && num <= 37)) {
+            submitFalse('文件名命名不正确');
+            return false;
+        }
+        return true;
+    } else if (subject == '计网') {
+        let temp = str.toLowerCase().split('.').splice(-1);
+        let head = '广金实验报告1-2_1915431';
         let last = str.split(head)[1];
         let num = null;
         if (last != null) {

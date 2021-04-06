@@ -216,10 +216,10 @@ function upload() {
     if (nowFile) {
         if (Date.now() < ddl) {
             let formdata = new FormData();
-            formdata.append('file', nowFile);
+            formdata.append('uploadFile', nowFile);
             ajax({
                 type: 'post',
-                url: '/shaobing/io/upload',
+                url: 'user/save',
                 data: formdata,
                 success: function (res) {
                     closeTips();

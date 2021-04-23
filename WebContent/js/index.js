@@ -1,8 +1,8 @@
 ﻿//#region 
 // 设置参数
 
-// 交作业的科目(javaweb,多媒体,计组,javaee,python,计网)
-let subject = '计网';
+// 交作业的科目(javaweb,多媒体,计组,javaee,python,计网,Oracle)
+let subject = 'Oracle';
 
 let cycleRange = 2; // 背景图总个数
 
@@ -16,25 +16,25 @@ let adminState = true; // 是否开启控制台锁
 
 let adminPassword = '1234Qwer'; // 控制台密码
 
-let ddl = new Date('2021-4-12 18:00:00'); // 截止日期(格式：yyyy-mm-dd hh:mm:ss)
+let ddl = new Date('2021/4/30 20:00:00'); // 截止日期(格式：yyyy/mm/dd hh:mm:ss)
 
 // 背景图片对话框配置对象
 let bgiOptions = [
     [{
-            type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
-            top_bottom: '0px', // top值
-            left_right: '0px', // left值
-            text: '王老板牛逼', // 文案
-            bgc: '#fff' // 背景颜色
-        },
-        {
-            type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
-            top_bottom: '0px', // top值
-            left_right: '0px', // left值
-            text: '王老板贼牛逼', // 文案
-            bgc: 'rgba(0, 0, 0, 0.5)' // 背景颜色
-            // 数组中第0个元素为模板不用删掉
-        }
+        type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
+        top_bottom: '0px', // top值
+        left_right: '0px', // left值
+        text: '王老板牛逼', // 文案
+        bgc: '#fff' // 背景颜色
+    },
+    {
+        type: 0, // 直角位置的参数，0 左上，1右上，2左下，3右下，-1隐藏
+        top_bottom: '0px', // top值
+        left_right: '0px', // left值
+        text: '王老板贼牛逼', // 文案
+        bgc: 'rgba(0, 0, 0, 0.5)' // 背景颜色
+        // 数组中第0个元素为模板不用删掉
+    }
     ],
     [{
         type: 1,
@@ -43,18 +43,18 @@ let bgiOptions = [
         text: '你来交作业了吗？'
     }],
     [{
-            type: 1,
-            top_bottom: '74%',
-            left_right: '15%',
-            text: '不想学了'
-        },
-        {
-            type: 2,
-            top_bottom: '36%',
-            left_right: '68%',
-            text: '学废了',
-            // bgc: '#f00'
-        }
+        type: 1,
+        top_bottom: '74%',
+        left_right: '15%',
+        text: '不想学了'
+    },
+    {
+        type: 2,
+        top_bottom: '36%',
+        left_right: '68%',
+        text: '学废了',
+        // bgc: '#f00'
+    }
     ]
 ];
 //#endregion
@@ -75,7 +75,7 @@ let initialFileList = input.files; // 初始文件列表
 let nowFileList = initialFileList; // 当前文件列表
 
 // 重置选择文件的框
-function selectReset() {
+function selectReset () {
     select.removeClass('select');
     select.innerText = '选择文件';
     let span = document.createElement('span');
@@ -87,7 +87,7 @@ function selectReset() {
 }
 
 // 文件改变函数
-function inputChangeFunction() {
+function inputChangeFunction () {
     let file = input.files[0];
     if (!file) {
         return;
@@ -111,7 +111,7 @@ function inputChangeFunction() {
 }
 
 // 判断文件名是否满足格式
-function judge(file) {
+function judge (file) {
     let str = file.name;
     if (subject == 'javaweb') {
         if (str.length > 18 || str.length < 16) {
@@ -165,13 +165,13 @@ function judge(file) {
         return true;
     } else if (subject == 'python') {
         let temp = str.toLowerCase().split('.').splice(-1);
-        let head = '《Python程序设计》实验报告1(实验3)-1915431';
+        let head = '《Python程序设计》实验报告2(实验4)-1915431';
         let last = str.split(head)[1];
         let num = null;
         if (last != null) {
             try {
                 num = last.substring(0, 2) - 0;
-            } catch (e) {}
+            } catch (e) { }
         }
         console.log(num);
         if (temp[0] != "doc" && temp[0] != "docx") {
@@ -184,19 +184,30 @@ function judge(file) {
         return true;
     } else if (subject == '计网') {
         let temp = str.toLowerCase().split('.').splice(-1);
-        let head = '广金实验报告1-2_1915431';
+        let head = '广金实验报告4_1915431';
         let last = str.split(head)[1];
         let num = null;
         if (last != null) {
             try {
                 num = last.substring(0, 2) - 0;
-            } catch (e) {}
+            } catch (e) { }
         }
         console.log(num);
         if (temp[0] != "doc" && temp[0] != "docx") {
             submitFalse('文件名类型不正确');
             return false;
         } else if (str.indexOf(head) != 0 || (num == null) || !(num >= 1 && num <= 37)) {
+            submitFalse('文件名命名不正确');
+            return false;
+        }
+        return true;
+    } else if (subject == 'Oracle') {
+        let temp = str.toLowerCase().split('.').splice(-1);
+        let head = str.toLowerCase().split('.')[0];
+        if (temp[0] != "doc" && temp[0] != "docx") {
+            submitFalse('文件名类型不正确');
+            return false;
+        } else if (str.substring(0, 7) != "1915431" || head.substring(head.length - 5, head.length) != '实验报告一') {
             submitFalse('文件名命名不正确');
             return false;
         }
@@ -212,7 +223,7 @@ function judge(file) {
 input.addEventListener('change', inputChangeFunction);
 
 // 提交函数
-function upload() {
+function upload () {
     if (nowFile) {
         if (Date.now() < ddl) {
             let formdata = new FormData();
@@ -291,7 +302,7 @@ let submitTipsYes = submitTips.getDom('.yes'); // 确定按钮
 submitTips.state = false;
 
 // 关闭提示框函数
-function closeTips() {
+function closeTips () {
     submitTips.hide();
     transparentPlate.hide();
     submitTips.state = false;
@@ -308,7 +319,7 @@ document.addEventListener('keydown', function (e) {
 });
 
 // 提交成功函数
-function submitTrue() {
+function submitTrue () {
     transparentPlate.show();
     submitTipsPhoto.style.backgroundImage = 'url(img/submitTrue.png)';
     submitTipsText.innerText = '提交成功';
@@ -318,7 +329,7 @@ function submitTrue() {
 }
 
 // 加载中函数
-function submitLoading() {
+function submitLoading () {
     transparentPlate.show();
     submitTipsPhoto.style.backgroundImage = 'url(img/loading.gif)';
     submitTipsText.innerText = '上传中';
@@ -328,7 +339,7 @@ function submitLoading() {
 }
 
 // 提交失败函数
-function submitFalse(str) {
+function submitFalse (str) {
     transparentPlate.show();
     submitTipsPhoto.style.backgroundImage = 'url(img/submitFalse.png)';
     submitTipsText.innerText = str ? str : '提交失败';
@@ -352,7 +363,7 @@ for (let i = 1; i <= cycleRange; i++) {
 }
 
 // 修改小对话框函数
-function changeDialog() {
+function changeDialog () {
 
     // 遍历配置对象中当前索引
     for (let i = 0; i < bgiOptions[bgiIndex].length; i++) {
@@ -416,7 +427,7 @@ bgi.children[bgiIndex].style.opacity = 1;
 changeDialog();
 
 // 切换背景图
-function changeBGI() {
+function changeBGI () {
     bgi.children[bgiIndex].style.opacity = 0;
     bgiIndex = bgiIndex + 1 > cycleRange ? 1 : bgiIndex + 1;
     bgi.children[bgiIndex].style.opacity = 1;
@@ -469,7 +480,7 @@ document.addEventListener('keydown', function (e) {
 });
 
 // 解锁函数
-function unlock() {
+function unlock () {
     if (admin) {
         return;
     }
@@ -503,24 +514,24 @@ document.addEventListener('contextmenu', function (e) {
 });
 
 // 如果devtoor还是被打开了，就无限debugger
-function check() {
+function check () {
     if (admin) {
         return;
     }
 
-    function doCheck(a) {
+    function doCheck (a) {
         if (("" + a / a)["length"] !== 1 || a % 20 === 0) {
-            (function () {}
-                ["constructor"]("debugger")())
+            (function () { }
+            ["constructor"]("debugger")())
         } else {
-            (function () {}
-                ["constructor"]("debugger")())
+            (function () { }
+            ["constructor"]("debugger")())
         }
         doCheck(++a);
     }
     try {
         doCheck(0);
-    } catch (err) {}
+    } catch (err) { }
 };
 
 let debuggerTimer = setInterval(function () {

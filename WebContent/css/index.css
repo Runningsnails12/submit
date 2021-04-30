@@ -302,8 +302,11 @@ body {
 .listBox li {
     height: 40px;
     padding-left: 20px;
+    overflow: hidden;
     font-size: 18px;
     line-height: 40px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     color: #d0d0d0;
     cursor: pointer;
     transition: background-color .3s;

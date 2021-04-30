@@ -12,7 +12,7 @@ let bgiIndex = 1; // 背景图的初始下标
 
 let rotation = true; // 是否轮播
 
-let adminState = false; // 是否开启控制台锁
+let adminState = true; // 是否开启控制台锁
 
 let adminPassword = '1234Qwer'; // 控制台密码
 
@@ -243,6 +243,7 @@ function upload () {
                         }
                         submit.state = true;
                         selectReset();
+                        loadList();
                     }, 50);
                 },
                 progress: function (e) {
@@ -363,20 +364,29 @@ function toggleListBox () {
 }
 
 logo.addEventListener('click', toggleListBox);
-ajax({
-    type: 'get',
-    url: 'homework/queryHomework',
-    success: function (res) {
-        for (let text of res.data) {
-            let li = document.createElement('li');
-            li.innerText = text;
-            listBox.append(li);
+
+// 加载已提交列表
+function loadList () {
+    ajax({
+        type: 'get',
+        url: 'homework/queryHomework',
+        success: function (res) {
+            for (let dom of listBox.children) {
+                dom.removeDom();
+            }
+            for (let text of res.data) {
+                let li = document.createElement('li');
+                li.innerText = text;
+                listBox.append(li);
+            }
         }
-    }
-});
+    });
+}
+
+loadList();
+
 
 // 背景相关
-
 let bgi = getDom('.bgi'); // 背景图盒子
 let dialogBox = bgi.getDom('.dialogBox'); // 对话框盒子
 

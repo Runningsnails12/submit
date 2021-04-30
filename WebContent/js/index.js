@@ -2,7 +2,7 @@
 // 设置参数
 
 // 交作业的科目(javaweb,多媒体,计组,javaee,python,计网,Oracle)
-let subject = 'Oracle';
+let subject = 'python';
 
 let cycleRange = 2; // 背景图总个数
 
@@ -12,11 +12,11 @@ let bgiIndex = 1; // 背景图的初始下标
 
 let rotation = true; // 是否轮播
 
-let adminState = true; // 是否开启控制台锁
+let adminState = false; // 是否开启控制台锁
 
 let adminPassword = '1234Qwer'; // 控制台密码
 
-let ddl = new Date('2021/4/30 20:00:00'); // 截止日期(格式：yyyy/mm/dd hh:mm:ss)
+let ddl = new Date('2021/4/29 22:00:00'); // 截止日期(格式：yyyy/mm/dd hh:mm:ss)
 
 // 背景图片对话框配置对象
 let bgiOptions = [
@@ -165,7 +165,7 @@ function judge (file) {
         return true;
     } else if (subject == 'python') {
         let temp = str.toLowerCase().split('.').splice(-1);
-        let head = '《Python程序设计》实验报告2(实验4)-1915431';
+        let head = '《Python程序设计》实验报告3(实验5)-1915431';
         let last = str.split(head)[1];
         let num = null;
         if (last != null) {
@@ -347,6 +347,33 @@ function submitFalse (str) {
     submitTips.state = true;
     submitTipsYes.show();
 }
+
+// 右侧列表
+let logo = getDom('.logo');
+let listBox = getDom('.listBox');
+let listBoxState = false;
+
+function toggleListBox () {
+    if (listBoxState) {
+        listBox.style.right = '-300px';
+    } else {
+        listBox.style.right = '0px';
+    }
+    listBoxState = !listBoxState;
+}
+
+logo.addEventListener('click', toggleListBox);
+ajax({
+    type: 'get',
+    url: 'homework/queryHomework',
+    success: function (res) {
+        for (let text of res.data) {
+            let li = document.createElement('li');
+            li.innerText = text;
+            listBox.append(li);
+        }
+    }
+});
 
 // 背景相关
 
